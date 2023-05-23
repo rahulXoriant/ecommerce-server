@@ -7,16 +7,13 @@ def get_categories_service():
         serializer = CategorySerializer(categories, many=True)
         return serializer.data
     except:
-        raise TypeError("product_services > get_categories_service: something went wrong.")
+        raise RuntimeError("product_services > get_categories_service: something went wrong.")
     
 def get_products_service(request):
     try:
         search_query = request.query_params.get('q')
         category = request.query_params.get('category')
         is_cash_on_delivery_available = request.query_params.get('isCashOnDeliveryAvailable')
-
-        if search_query == None:
-            search_query = ''
 
         products = Product.objects.all().order_by('-created_at')
 
@@ -32,7 +29,7 @@ def get_products_service(request):
         serializer = ProductSerializer(products, many=True)
         return serializer.data
     except Exception as e:
-        raise TypeError(f"product_services > get_categories_service: {e}")
+        raise RuntimeError(f"product_services > get_products_service: {e}")
 
 def get_product_details_service(request, product_id):
     try:
@@ -41,7 +38,7 @@ def get_product_details_service(request, product_id):
         serializer = ProductSerializer(products)
         return serializer.data
     except Exception as e:
-        raise TypeError(f"product_services > get_product_details_service: {e}")
+        raise RuntimeError(f"product_services > get_product_details_service: {e}")
 
 def get_stock_service(request, product_id):
     try:
@@ -50,5 +47,5 @@ def get_stock_service(request, product_id):
         serializer = StocksSerializer(stocks)
         return serializer.data
     except Exception as e:
-        raise TypeError(f"product_services > get_stock_service: {e}")
+        raise RuntimeError(f"product_services > get_stock_service: {e}")
   
